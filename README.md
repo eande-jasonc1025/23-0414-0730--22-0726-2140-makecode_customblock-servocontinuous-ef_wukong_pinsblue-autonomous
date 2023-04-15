@@ -1,5 +1,6 @@
 
-> Open this page at [https://eande-jasonc1025.github.io/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue/](https://eande-jasonc1025.github.io/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue/)
+> Open this page at [https://github.com/eande-jasonc1025/23-0414-0730--22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue-autonomous/)
+OLD: https://eande-jasonc1025.github.io/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue/](https://eande-jasonc1025.github.io/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue/)
 
 ## Important Notes
 * 22-1212-1430 MakeCode Extension: OLED12864_I2C
@@ -11,15 +12,18 @@ This repository can be added as an **extension** in MakeCode.
 * open [https://makecode.microbit.org/](https://makecode.microbit.org/)
 * click on **New Project**
 * click on **Extensions** under the gearwheel menu
-* search for **https://github.com/eande-jasonc1025/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue** and import
+* search for **https://github.com/eande-jasonc1025/23-0414-0730--22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue-autonomous** and import
+OLD: * search for **https://github.com/eande-jasonc1025/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue** and import
 
-## Edit this project ![Build status badge](https://github.com/eande-jasonc1025/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue/workflows/MakeCode/badge.svg)
+## Edit this project ![Build status badge](https://github.com/eande-jasonc1025/23-0414-0730--22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue-autonomous)
+OLD: ## Edit this project ![Build status badge](https://github.com/eande-jasonc1025/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue/workflows/MakeCode/badge.svg)
 
 To edit this repository in MakeCode.
 
 * open [https://makecode.microbit.org/](https://makecode.microbit.org/)
 * click on **Import** then click on **Import URL**
-* paste **https://github.com/eande-jasonc1025/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue** and click import
+* paste **https://github.com/eande-jasonc1025/23-0414-0730--22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue-autonomous** and click import
+OLD: * paste **https://github.com/eande-jasonc1025/22-0726-2140-makecode_customblock-servocontinuous-ef_wukong_pinsblue** and click import
 
 ## Blocks preview
 
