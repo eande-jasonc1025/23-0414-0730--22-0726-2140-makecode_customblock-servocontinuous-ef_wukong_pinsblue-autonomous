@@ -270,10 +270,10 @@ namespace q_Autonomous {
         mode_State_Run_TimeSystem_Countdown_Now_Sec_Int = mode_State_Run_TimeSystem_Countdown_Max_Sec_Int
 
         ///jwc DEBUG
-        serial.writeLine("1 "+convertToText(timer_countdown_sec_int_in) + convertToText(mode_State_Run_TimeSystem_Countdown_Now_Sec_Int))
+        ///jwc y debug serial.writeLine("1 "+convertToText(timer_countdown_sec_int_in) + convertToText(mode_State_Run_TimeSystem_Countdown_Now_Sec_Int))
 
         while (mode_State_Run_TimeSystem_Countdown_Now_Sec_Int > 0) {
-            serial.writeLine("2 " + convertToText(timer_countdown_sec_int_in) + convertToText(mode_State_Run_TimeSystem_Countdown_Now_Sec_Int))
+            ///jwc y debug serial.writeLine("2 " + convertToText(timer_countdown_sec_int_in) + convertToText(mode_State_Run_TimeSystem_Countdown_Now_Sec_Int))
             ///jwc y needs to run or freeze, unless deactivate 'mode_Force_Straight_Pdi_Magnetometer_Bool = true':  rq_Run_PID_Motion_InnerLoop_Fn()
             //
             // * IMPORTANT: Following required as once in this while loop, multithreading is not possible, so prior exteranl process 'loops.everyInterval(500, function ())' will freeze/wait/suspend
