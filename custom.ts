@@ -970,7 +970,7 @@ namespace quest_Hardware {
         OLED12864_I2C.showString(
             0,
             1,
-            "Bot:" + convertToText(deviceType_Bot_Bool) + "| Controller:" + convertToText(deviceType_Controller_Bool),
+            "Bot:" + convertToText(deviceType_Bot_Bool) + "| Con:" + convertToText(deviceType_Controller_Bool),
             1
         )
     }
