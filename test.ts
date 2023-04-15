@@ -270,8 +270,8 @@ namespace quest_Autonomous {
     }
 
 
-    // * frequency: msec
-    loops.everyInterval(1000, function () {
+    // * frequency: was 1000 >> 500 msec
+    loops.everyInterval(500, function () {
         if (!mode_Force_Straight_Pdi_Magnetometer_Bool) {
             rq_Run_PID_Motion_InnerLoop_Fn()
         }
@@ -619,6 +619,10 @@ namespace quest_Autonomous {
     ///jwc o     do_Mode_State_Run_PID_Fn(0, 30, 0.1, 0.1, 0.01)
     ///jwc o })
 
+    input.onButtonPressed(Button.AB, function () {
+        input.calibrateCompass()
+    })
+
     input.onButtonPressed(Button.A, function () {
         sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int += 10
         do_Set_SensorCompassDirection_Stage01B_DetectTarget_Degrees_Int_Fn()
@@ -633,26 +637,24 @@ namespace quest_Autonomous {
         do_Confirm_Request_Increase_Func()
     })
     input.onGesture(Gesture.TiltRight, function () {
-        sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int - 0.05
-        do_Confirm_Request_Decrease_Func()
-    })
-
-    input.onGesture(Gesture.LogoDown, function () {
-        sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int - 0.05
-        do_Confirm_Request_Decrease_Func()
+        sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int + 0.005
+        do_Confirm_Request_Increase_Func()
     })
     input.onGesture(Gesture.LogoUp, function () {
         sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int + 0.05
         do_Confirm_Request_Increase_Func()
     })
 
-    input.onButtonPressed(Button.AB, function () {
-        sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int + 0.005
-        do_Confirm_Request_Increase_Func()
-    })
-    input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
+    // * Since not enough buttons, group all decrements under one button since not common usage
+    input.onGesture(Gesture.LogoDown, function () {
+        sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int - 0.05
         sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int - 0.005
+        sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int - 0.05
         do_Confirm_Request_Decrease_Func()
+    })
+
+    input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
+        // * Nothing for now
     })
 
 
