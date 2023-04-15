@@ -227,6 +227,16 @@ namespace quest_Autonomous {
             motor_PowerAdjust_Stage2_PdiBaseMotion_AsOffset_ForStraights_Int = motor_poweradjust_stage2_pdibasemotion_asoffset_forstraights_int
         }
 
+    // * frequency: was 1000 >> 500 msec
+    loops.everyInterval(500, function () {
+        if (!mode_Force_Straight_Pdi_Magnetometer_Bool) {
+            rq_Run_PID_Motion_InnerLoop_Fn()
+        }
+    })
+
+
+
+
     }
 
 
@@ -253,9 +263,9 @@ namespace quest_Autonomous {
 
         if (true) {
             sensor_Compass_Direction__Detect_Delta_Old__Degrees__Int = sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int
-            mode_Force_Straight_Pdi_Magnetometer_Bool = true
+            ///jwc y mode_Force_Straight_Pdi_Magnetometer_Bool = true
             basic.showIcon(IconNames.Sword)
-            ///y basic.pause(500)
+            ///jwc y basic.pause(500)
         }
 
         ///jwc ?
@@ -264,18 +274,18 @@ namespace quest_Autonomous {
         mode_State_Run_TimeSystem_Start_Sec_Int = control.millis() / 1000
         mode_State_Run_TimeSystem_Countdown_Now_Sec_Int = mode_State_Run_TimeSystem_Countdown_Max_Sec_Int
         while (mode_State_Run_TimeSystem_Countdown_Now_Sec_Int > 0) {
-            rq_Run_PID_Motion_InnerLoop_Fn()
+            ///jwc y needs to run or freeze, unless deactivate 'mode_Force_Straight_Pdi_Magnetometer_Bool = true':  rq_Run_PID_Motion_InnerLoop_Fn()
             mode_State_Run_TimeSystem_Countdown_Now_Sec_Int = mode_State_Run_TimeSystem_Countdown_Max_Sec_Int - ((control.millis() / 1000) - mode_State_Run_TimeSystem_Start_Sec_Int)
         }
     }
 
 
-    // * frequency: was 1000 >> 500 msec
-    loops.everyInterval(500, function () {
-        if (!mode_Force_Straight_Pdi_Magnetometer_Bool) {
-            rq_Run_PID_Motion_InnerLoop_Fn()
-        }
-    })
+    ///jwc y // * frequency: was 1000 >> 500 msec
+    ///jwc y loops.everyInterval(500, function () {
+    ///jwc y     if (!mode_Force_Straight_Pdi_Magnetometer_Bool) {
+    ///jwc y         rq_Run_PID_Motion_InnerLoop_Fn()
+    ///jwc y     }
+    ///jwc y })
 
 
     /**
