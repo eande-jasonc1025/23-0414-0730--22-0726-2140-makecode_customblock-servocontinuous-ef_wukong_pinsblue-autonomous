@@ -147,10 +147,10 @@ let motor_Power_Hi = 100
 // Green #008000 rgb(0, 128, 0)
 //
 /**
- * quest_Dashboard blocks
+ * q_Dashboard blocks
  */
 //% weight=69 color=#008000 icon="Q"
-namespace quest_Dashboard {
+namespace q_Dashboard {
     // OLED12864_I2C: Setup
     //
     OLED12864_I2C.init(60)
@@ -408,10 +408,10 @@ namespace quest_Dashboard {
 // Orange #ff7f00 rgb(255, 127, 0)
 //
 /**
- * quest_Timer blocks
+ * q_Timer blocks
  */
 //% weight=67 color=#ff7f00 icon="Q"
-namespace quest_Timer {
+namespace q_Timer {
     /**
      * rq_Set_ContinueCurrentState_CountdownTimer_Fn
      * @param countdownTimer number
@@ -442,10 +442,10 @@ namespace quest_Timer {
 // * Gray like a 'black/gray box' which needs more transparency
 //
 /**
- * quest_Algorithm blocks
+ * q_Algorithm blocks
  */
 //% weight=65 color=#3f3f3f icon="Q"
-namespace quest_Algorithm {
+namespace q_Algorithm {
     /**
     * rq_Get_Number_WithColumnPadding_AsStringOut_Fn
     * @param number_in number
@@ -482,10 +482,10 @@ namespace quest_Algorithm {
 //
 
 /**
- * quest_Note_1 blocks
+ * q_Note_1 blocks
  */
 //% weight=59 color=#C0C0C0 icon="Q"
-namespace quest_Note_1 {
+namespace q_Note_1 {
     /**
      * rq_Show_String_For_Note_Small_Fn
      * @param textStrIn string
@@ -508,10 +508,10 @@ namespace quest_Note_1 {
 }
 
 /**
- * quest_Note_2 blocks
+ * q_Note_2 blocks
  */
 //% weight=58 color=#00FF00 icon="Q"
-namespace quest_Note_2 {
+namespace q_Note_2 {
     /**
      * rq_Show_String_For_Note_Small_Fn
      * @param textStrIn string
@@ -534,10 +534,10 @@ namespace quest_Note_2 {
 }
 
 /**
- * quest_Note_3 blocks
+ * q_Note_3 blocks
  */
 //% weight=57 color=#00FFFF icon="Q"
-namespace quest_Note_3 {
+namespace q_Note_3 {
     /**
      * rq_Show_String_For_Note_Small_Fn
      * @param textStrIn string
@@ -560,10 +560,10 @@ namespace quest_Note_3 {
 }
 
 /**
- * quest_Note_4 blocks
+ * q_Note_4 blocks
  */
 //% weight=56 color=#FFFF00 icon="Q"
-namespace quest_Note_4 {
+namespace q_Note_4 {
     /**
      * rq_Show_String_For_Note_Small_Fn
      * @param textStrIn string
@@ -586,10 +586,10 @@ namespace quest_Note_4 {
 }
 
 /**
- * quest_Note_4 blo5ks
+ * q_Note_5 blo5ks
  */
 //% weight=55 color=#FF0000 icon="Q"
-namespace quest_Note_5 {
+namespace q_Note_5 {
     /**
      * rq_Show_String_For_Note_Small_Fn
      * @param textStrIn string
@@ -619,10 +619,10 @@ namespace quest_Note_5 {
 
 // * not too dark since would cover thin-black-boundaries
 /**
- * quest_Hardware blocks
+ * q_Hardware blocks
  */
 //% weight=51 color=#7f7fff icon="Q"
-namespace quest_Hardware {
+namespace q_Hardware {
     /// //
     /// // * Global Variables Q Constants
     /// //
@@ -767,14 +767,14 @@ namespace quest_Hardware {
         }
 
         // diagnostics
-        quest_Dashboard.rq_Show_Oled_Cleared_Fn
-        quest_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(convertToText(motor_Power_L) + " " + convertToText(motor_Power_R) + " " + convertToText(turn_Duration), 0, 0)
+        q_Dashboard.rq_Show_Oled_Cleared_Fn
+        q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(convertToText(motor_Power_L) + " " + convertToText(motor_Power_R) + " " + convertToText(turn_Duration), 0, 0)
 
         // timer
-        quest_Timer.rq_Set_ContinueCurrentState_CountdownTimer_Fn(turn_Duration, rq_Time_Units_Enum.Milliseconds)
+        q_Timer.rq_Set_ContinueCurrentState_CountdownTimer_Fn(turn_Duration, rq_Time_Units_Enum.Milliseconds)
 
         // stop
-        quest_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(portIdsIn, 0, 0)
+        q_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(portIdsIn, 0, 0)
 
         // diagnostics
         basic.showIcon(IconNames.Heart)
@@ -824,7 +824,7 @@ namespace quest_Hardware {
                                 motor_Power_R = motor_Power_Hi
                                 break  // out of these case statements
                         }
-                        quest_Dashboard.rq_Show_MotionDirection_Fn( rq_Motion_Direction_Enum.Left )
+                        q_Dashboard.rq_Show_MotionDirection_Fn( rq_Motion_Direction_Enum.Left )
                         break  // out of these case statements
 
                     case turn_Direction_Enum.right:
@@ -843,7 +843,7 @@ namespace quest_Hardware {
                                 motor_Power_R = motor_Power_No
                                 break  // out of these case statements
                         }
-                        quest_Dashboard.rq_Show_MotionDirection_Fn(rq_Motion_Direction_Enum.Right)
+                        q_Dashboard.rq_Show_MotionDirection_Fn(rq_Motion_Direction_Enum.Right)
                         break  // out of these case statements
                 }
                 break  // out of these case statements
@@ -867,7 +867,7 @@ namespace quest_Hardware {
                                 motor_Power_R = motor_Power_Hi
                                 break  // out of these case statements
                         }
-                        quest_Dashboard.rq_Show_MotionDirection_Fn(rq_Motion_Direction_Enum.Left)
+                        q_Dashboard.rq_Show_MotionDirection_Fn(rq_Motion_Direction_Enum.Left)
                         break  // out of these case statements
 
                     case turn_Direction_Enum.right:
@@ -886,7 +886,7 @@ namespace quest_Hardware {
                                 motor_Power_R = motor_Power_Hi * (-1)
                                 break  // out of these case statements
                         }
-                        quest_Dashboard.rq_Show_MotionDirection_Fn(rq_Motion_Direction_Enum.Right)
+                        q_Dashboard.rq_Show_MotionDirection_Fn(rq_Motion_Direction_Enum.Right)
                         break  // out of these case statements
                 }
                 break  // out of these case statements
@@ -938,17 +938,17 @@ namespace quest_Hardware {
         }
 
         // diagnostics
-        quest_Dashboard.rq_Show_Oled_Cleared_Fn
-        quest_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(convertToText(motor_Power_L) + " " + convertToText(motor_Power_R) + " " + convertToText(turn_Duration),0,0)   
+        q_Dashboard.rq_Show_Oled_Cleared_Fn
+        q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(convertToText(motor_Power_L) + " " + convertToText(motor_Power_R) + " " + convertToText(turn_Duration),0,0)   
         
         // turn
-        quest_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(port_Ids_In, motor_Power_L, motor_Power_R)
+        q_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(port_Ids_In, motor_Power_L, motor_Power_R)
         
         // timer
-        quest_Timer.rq_Set_ContinueCurrentState_CountdownTimer_Fn(turn_Duration, rq_Time_Units_Enum.Milliseconds)
+        q_Timer.rq_Set_ContinueCurrentState_CountdownTimer_Fn(turn_Duration, rq_Time_Units_Enum.Milliseconds)
         
         // stop
-        quest_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(port_Ids_In, 0, 0)
+        q_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(port_Ids_In, 0, 0)
 
         // diagnostics
         basic.showIcon(IconNames.Heart)
