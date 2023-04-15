@@ -250,139 +250,67 @@ namespace q_Dashboard {
             case rq_Motion_Direction_Enum.Forward:
                 if (deviceType_Bot_Bool) {
                     led.plot(2, 4)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . . # . .
-                            # # # # #
-                            . # # # .
-                            . . # . .
-                            `)
-                    */
                 }
                 else if (deviceType_Controller_Bool) {
                     led.plot(2, 0)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . # # # .
-                            # # # # #
-                            . . # . .
-                            . . # . .
-                            `)
-                    */
                 }
-                OLED12864_I2C.showString(
-                    0,
-                    0,
-                    "^",
-                    1
-                )
+                ///jwc y OLED12864_I2C.showString(
+                ///jwc y     0,
+                ///jwc y     0,
+                ///jwc y     "^",
+                ///jwc y     1
+                ///jwc y )
                 break
             case rq_Motion_Direction_Enum.Backward:
                 if (deviceType_Bot_Bool) {
                     led.plot(2, 0)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . # # # .
-                            # # # # #
-                            . . # . .
-                            . . # . .
-                            `)
-                    */
                 }
                 else if (deviceType_Controller_Bool) {
                     led.plot(2, 4)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . . # . .
-                            # # # # #
-                            . # # # .
-                            . . # . .
-                            `)
-                    */
                 }
-                OLED12864_I2C.showString(
-                    0,
-                    0,
-                    "v",
-                    1
-                )
+                ///jwc y OLED12864_I2C.showString(
+                ///jwc y     0,
+                ///jwc y     0,
+                ///jwc y     "v",
+                ///jwc y     1
+                ///jwc y )
                 break
             case rq_Motion_Direction_Enum.Left:
                 if (deviceType_Bot_Bool) {
                     led.plot(4, 2)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . . # # .
-                            # # # # #
-                            . . # # .
-                            . . # . .
-                            `)
-                    */
                 }
                 else if (deviceType_Controller_Bool) {
                     led.plot(0, 2)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . # # . .
-                            # # # # #
-                            . # # . .
-                            . . # . .
-                            `)
-                    */
                 }
-                OLED12864_I2C.showString(
-                    0,
-                    0,
-                    "<",
-                    1
-                )
+                ///jwc y OLED12864_I2C.showString(
+                ///jwc y     0,
+                ///jwc y     0,
+                ///jwc y     "<",
+                ///jwc y     1
+                ///jwc y )
                 break
             case rq_Motion_Direction_Enum.Right:
                 if (deviceType_Bot_Bool) {
                     led.plot(0, 2)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . # # . .
-                            # # # # #
-                            . # # . .
-                            . . # . .
-                            `)
-                    */
                 }
                 else if (deviceType_Controller_Bool) {
                     led.plot(4, 2)
-                    /*basic.showLeds(`
-                            . . # . .
-                            . . # # .
-                            # # # # #
-                            . . # # .
-                            . . # . .
-                            `)
-                    */
                 }
-                OLED12864_I2C.showString(
-                    0,
-                    0,
-                    ">",
-                    1
-                )
+                ///jwc y OLED12864_I2C.showString(
+                ///jwc y     0,
+                ///jwc y     0,
+                ///jwc y     ">",
+                ///jwc y     1
+                ///jwc y )
                 break
             case rq_Motion_Direction_Enum.Stop:
                 led.plot(2, 2)
-                /*basic.showLeds(`
-                        . . . . .
-                        . . . . .
-                        . . # . .
-                        . . . . .
-                        . . . . .
-                        `)
-                */
-                OLED12864_I2C.showString(
-                    0,
-                    0,
-                    ".",
-                    1
-                )
+                ///jwc y OLED12864_I2C.showString(
+                ///jwc y     0,
+                ///jwc y     0,
+                ///jwc y     ".",
+                ///jwc y     1
+                ///jwc y )
                 break
             default:
                 basic.showLeds(`
@@ -392,12 +320,12 @@ namespace q_Dashboard {
                 . # # # .
                 # . . . #
                 `)
-                OLED12864_I2C.showString(
-                    0,
-                    0,
-                    "?",
-                    1
-                )
+                ///jwc y OLED12864_I2C.showString(
+                ///jwc y     0,
+                ///jwc y     0,
+                ///jwc y     "?",
+                ///jwc y     1
+                ///jwc y )
                 break
         }
     }

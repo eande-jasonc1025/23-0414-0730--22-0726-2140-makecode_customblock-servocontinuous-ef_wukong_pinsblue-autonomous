@@ -1,7 +1,7 @@
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     q_Autonomous.rq_Run_PID_Motion_Fn(
     0,
-    3
+    10
     )
     q_Timer.rq_Set_ContinueCurrentState_CountdownTimer_Fn(2, rq_Time_Units_Enum.Seconds)
     q_Autonomous.rq_Run_PID_Motion_Fn(
@@ -33,6 +33,3 @@ q_Autonomous.rq_Set_PID_Settings_Fn(
 12,
 20
 )
-basic.forever(function () {
-	
-})

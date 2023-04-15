@@ -39,6 +39,13 @@ let motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int
 let motor_Power_STOP_INT = 0
 let cpu_Throttle_DELAY_MSEC_INT = 0
 
+let editMode_Yes_CHAR = ">"
+let editMode_Not_CHAR = " "
+let editMode_K_Select_CHAR_ARRAY = [editMode_Yes_CHAR, editMode_Not_CHAR, editMode_Not_CHAR]
+let editMode_K_ValueToAdd_INT_ARRAY = [0.05, 0.005, 0.05];
+
+let editMode_K_Now_Base0_Int = 0
+let editMode_K_Max_Base0_Int = 2
 
 //
 // Teal #008080 rgb(0, 128, 128)
@@ -88,15 +95,6 @@ namespace q_Autonomous {
             // * Since 'micro:bit' ver2, should process faster, even with OLED cpu-graphics-overhead, so 25ms to 0msec
             cpu_Throttle_DELAY_MSEC_INT = 0
             if (true) {
-                // 360-Servo
-                // * For StopPerpendicularToNonReflectLine
-                // ** Min 150, Max 210, Stop 180: Too Slow?
-                // ** Min 120, Max 240, Stop 180 Too Fast
-                // ** 135, 225, 180
-                // ** 150, 210, 180 delta 30
-                // ** 135, 225, 180 delta 45
-                // ** 140, 220, 180 delta 40
-                // 
                 // * Convert from 360_degrees servo to 180_degrees servo
                 // 
                 // * Geek-Green-Servo: was 0, 90, 180, yet too fast, try 45, 90, 135, better but still kindof fast,
@@ -186,9 +184,9 @@ namespace q_Autonomous {
             if (true) {
                 // Even at Max Value, still leave one LED off to show CW/CCW orientation. Thus only 25-1=24 Leds usable
                 graph_Number__Leds_Counter_MAX__BASE1__INT = 24
-                q_Note_2.rq_Show_String_For_Note_Small_Fn(
-                    "x4 so 0.25 appears as 1 LedDot"
-                )
+                ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+                ///jwc     "x4 so 0.25 appears as 1 LedDot"
+                ///jwc )
                 graph_Number__Leds_Counter_SensitvityZoomin_MULTIPLIER_INT = 4
             }
             if (true) {
@@ -199,16 +197,16 @@ namespace q_Autonomous {
             }
         }
         if (true) {
-            q_Note_2.rq_Show_String_For_Note_Small_Fn(
-                "Any usage of 'compass heading' will trigger calibration if needed."
-            )
+            ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+            ///jwc y     "Any usage of 'compass heading' will trigger calibration if needed."
+            ///jwc y )
             sensor_Compass_Direction__Bot_Now__Degrees__Int = input.compassHeading()
         }
 
 
-        q_Note_2.rq_Show_String_For_Note_Small_Fn(
-            "User FrontEnd Parameters"
-        )
+        ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+        ///jwc y     "User FrontEnd Parameters"
+        ///jwc y )
         if (true) {
             // 0.1 :)
             sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int = k_p_in
@@ -218,9 +216,9 @@ namespace q_Autonomous {
             sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = k_i_in
         }
 
-        q_Note_2.rq_Show_String_For_Note_Small_Fn(
-            "System BackEnd Parameters"
-        )
+        ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+        ///jwc y     "System BackEnd Parameters"
+        ///jwc y )
         if (true) {
             // was 20
             motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int = motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int
@@ -234,20 +232,15 @@ namespace q_Autonomous {
         }
     })
 
-
-
-
     }
 
-
-    /// JWC TODO
 
     /**
     * rq_Run_PID_Motion_Fn
     * @param turning_offset_int_in number
     * @param timer_countdown_sec_int_in number
     */
-    //% block="run pid motion:|* turning_offset_int_in[0..270]: $turning_offset_int_in|* timer_countdown_sec_int_in[0..60](sec): $timer_countdown_sec_int_in"
+    //% block="run pid motion:|* turning_offset_int_in[0..270]: $turning_offset_int_in|* timer_countdown_sec_int_in(sec)[0..60]: $timer_countdown_sec_int_in"
     //% turning_offset_int_in.min=0 turning_offset_int_in.max=270
     //% timer_countdown_sec_int_in.min=0 timer_countdown_sec_int_in.max=60
     //% weight=85 blockGap=8
@@ -280,14 +273,6 @@ namespace q_Autonomous {
     }
 
 
-    ///jwc y // * frequency: was 1000 >> 500 msec
-    ///jwc y loops.everyInterval(500, function () {
-    ///jwc y     if (!mode_Force_Straight_Pdi_Magnetometer_Bool) {
-    ///jwc y         rq_Run_PID_Motion_InnerLoop_Fn()
-    ///jwc y     }
-    ///jwc y })
-
-
     /**
     * rq_Run_PID_Motion_InnerLoop_Fn
     */
@@ -313,11 +298,11 @@ namespace q_Autonomous {
                     sensor_Compass_Direction__Bot_Now__Degrees__Int,
                     3,
                     0
-                ) + " =" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ) + "=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int,
                     4,
                     0
-                ) + " D" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ) + " D:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int,
                     3,
                     0
@@ -326,15 +311,15 @@ namespace q_Autonomous {
                 0
             )
             q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "Kp" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                editMode_K_Select_CHAR_ARRAY[0] + "Kp" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int,
                     4,
                     2
-                ) + " Kd" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ) + " " + editMode_K_Select_CHAR_ARRAY[1] + "Kd" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int,
                     4,
                     2
-                ) + " Ki" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ) + " " + editMode_K_Select_CHAR_ARRAY[2] + "Ki" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int,
                     5,
                     3
@@ -428,15 +413,19 @@ namespace q_Autonomous {
                 6
             )
             q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "Dead:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                "De:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int,
                     2,
                     0
-                ) + " Base:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ) + " Ba:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     motor_PowerAdjust_Stage2_PdiBaseMotion_AsOffset_ForStraights_Int,
                     2,
                     0
-                ) + " Time:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ) + " Wi:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                    sensor_Compass_Direction__Detect_TargetWindow_Degrees_Int,
+                    2,
+                    0
+                ) + " Ti:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
                     mode_State_Run_TimeSystem_Countdown_Now_Sec_Int,
                     2,
                     0
@@ -444,9 +433,9 @@ namespace q_Autonomous {
                 0,
                 7
             )
-            q_Note_2.rq_Show_String_For_Note_Small_Fn(
-                "Multiply the first parameter for such multiple in granularity"
-            )
+            ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+            ///jwc y      "Multiply the first parameter for such multiple in granularity"
+            ///jwc y )
             do_GraphNumber_Func(sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int * graph_Number__Leds_Counter_SensitvityZoomin_MULTIPLIER_INT, graph_Number__Leds_Counter_MAX__BASE1__INT)
             // Delay to prevent Cpu-Overload
             basic.pause(cpu_Throttle_DELAY_MSEC_INT)
@@ -515,41 +504,41 @@ namespace q_Autonomous {
             if (true) {
                 _system_StringVariable_AsComment = "P + D + I Fixes"
                 sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int = sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_Fix__Int + sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_Fix__Int + sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_Fix__Int
-                q_Note_2.rq_Show_String_For_Note_Small_Fn(
-                    "'motor_Power_Left/Right_Int' Stage 1: Set to Base Value"
-                )
+                ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+                ///jwc y     "'motor_Power_Left/Right_Int' Stage 1: Set to Base Value"
+                ///jwc y )
                 if (true) {
                     motor_Power_Left_Int = motor_Power_STOP_INT + (motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int + motor_PowerAdjust_Stage2_PdiBaseMotion_AsOffset_ForStraights_Int)
                     motor_Power_Right_Int = motor_Power_STOP_INT + (motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int + motor_PowerAdjust_Stage2_PdiBaseMotion_AsOffset_ForStraights_Int)
                 }
                 // Ktotal: CCW, CW, or None Icons (and Place 'motor_PowerDeadzone_OffsetFromIdle_AsNewPowerStartBase_Int' Appropiately Relative to Center-Idle_90_Degrees for PID-Turn Only
                 if (sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int > 1 * sensor_Compass_Direction__Detect_TargetWindow_Degrees_Int) {
-                    q_Note_3.rq_Show_String_For_Note_Small_Fn(
-                        "CW: +"
-                    )
+                    ///jwc y q_Note_3.rq_Show_String_For_Note_Small_Fn(
+                    ///jwc y     "CW: +"
+                    ///jwc y )
                     if (true) {
                         motor_Direction_Left_Str = "^"
                         motor_Direction_Right_Str = "v"
                     }
-                    q_Note_2.rq_Show_String_For_Note_Small_Fn(
-                        "'motor_Power_Left/Right_Int' Stage 2: Add Offset Value"
-                    )
+                    ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+                    ///jwc y     "'motor_Power_Left/Right_Int' Stage 2: Add Offset Value"
+                    ///jwc y )
                     // Add Ktotal (and 'motor_PowerForwardMin_OffsetFromIdle_Int' for PID-0Straight)
                     if (true) {
                         motor_Power_Left_Int = motor_Power_Left_Int + sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int
                         motor_Power_Right_Int = motor_Power_Right_Int - sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int
                     }
                 } else if (sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int < -1 * sensor_Compass_Direction__Detect_TargetWindow_Degrees_Int) {
-                    q_Note_3.rq_Show_String_For_Note_Small_Fn(
-                        "CCW: -"
-                    )
+                    ///jwc y q_Note_3.rq_Show_String_For_Note_Small_Fn(
+                    ///jwc y     "CCW: -"
+                    ///jwc y )
                     if (true) {
                         motor_Direction_Left_Str = "v"
                         motor_Direction_Right_Str = "^"
                     }
-                    q_Note_2.rq_Show_String_For_Note_Small_Fn(
-                        "'motor_Power_Left/Right_Int' Stage 2: Add Offset Value"
-                    )
+                    ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
+                    ///jwc y     "'motor_Power_Left/Right_Int' Stage 2: Add Offset Value"
+                    ///jwc y )
                     // Add Ktotal (and 'motor_PowerForwardMin_OffsetFromIdle_Int' for PID-0Straight)
                     if (true) {
                         motor_Power_Left_Int = motor_Power_Left_Int + sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int
@@ -584,9 +573,9 @@ namespace q_Autonomous {
                 _local_graph_number__leds_counter_index__base0__int = 24
                 // No-Need to invert/reverse direction for true clockwise
                 _local_graph_number__x_axis_invert_offset__int = 0
-                q_Note_1.rq_Show_String_For_Note_Small_Fn(
-                    "Pivot Dot is brightest"
-                )
+                ///jwc y q_Note_1.rq_Show_String_For_Note_Small_Fn(
+                ///jwc y     "Pivot Dot is brightest"
+                ///jwc y )
                 led.plotBrightness(2, 0, 255)
             } else {
                 _system_StringVariable_AsComment = "Bot CCW: start (0,0): led #00[base-0] & light leds forward (step +1)"
@@ -594,16 +583,16 @@ namespace q_Autonomous {
                 _local_graph_number__leds_counter_index__base0__int = 0
                 // Need to invert/reverse direction for true counter-clockwise
                 _local_graph_number__x_axis_invert_offset__int = -4
-                q_Note_1.rq_Show_String_For_Note_Small_Fn(
-                    "Pivot Dot is brightest"
-                )
+                ///jwc y q_Note_1.rq_Show_String_For_Note_Small_Fn(
+                ///jwc y     "Pivot Dot is brightest"
+                ///jwc y )
                 led.plotBrightness(2, 4, 255)
             }
             for (let index = 0; index < _local_graph_number__leds_needed__base1__int; index++) {
                 if (_local_graph_number__leds_counter_index__base0__int == 0 || _local_graph_number__leds_counter_index__base0__int == 24) {
-                    q_Note_1.rq_Show_String_For_Note_Small_Fn(
-                        "Header Dot is brightest"
-                    )
+                    ///jwc y q_Note_1.rq_Show_String_For_Note_Small_Fn(
+                    ///jwc y     "Header Dot is brightest"
+                    ///jwc y )
                     led.plotBrightness(Math.abs(_local_graph_number__leds_counter_index__base0__int % 5 + _local_graph_number__x_axis_invert_offset__int), Math.idiv(_local_graph_number__leds_counter_index__base0__int, 5), 255)
                 } else {
                     led.plotBrightness(Math.abs(_local_graph_number__leds_counter_index__base0__int % 5 + _local_graph_number__x_axis_invert_offset__int), Math.idiv(_local_graph_number__leds_counter_index__base0__int, 5), 32)
@@ -613,17 +602,35 @@ namespace q_Autonomous {
         }
     }
 
+    // do_GraphNumber_Func
+    function do_editMode_K_Value_Fn(editmode_k_now_base0_int: number, value_to_add: number) {
+        switch (editmode_k_now_base0_int) {
+            case 0:
+                sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int += value_to_add
+                break
+            case 1:
+                sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int += value_to_add
+                break
+            case 2:
+                sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int += value_to_add
+                break
+            default:
+                basic.showString("ERROR: do_editMode_K_Value_Fn")
+                break
+        }
 
-    function do_Confirm_Req_Increase_Func() {
-        basic.clearScreen()
-        led.plot(0, 2)
-        basic.pause(500)
     }
-    function do_Confirm_Req_Decrease_Func() {
-        basic.clearScreen()
-        led.plot(4, 2)
-        basic.pause(500)
-    }
+
+    ///jwc y function do_Confirm_Req_Increase_Func() {
+    ///jwc y     basic.clearScreen()
+    ///jwc y     led.plot(0, 2)
+    ///jwc y     basic.pause(500)
+    ///jwc y }
+    ///jwc y function do_Confirm_Req_Decrease_Func() {
+    ///jwc y     basic.clearScreen()
+    ///jwc y     led.plot(4, 2)
+    ///jwc y     basic.pause(500)
+    ///jwc y }
 
     ///jwc o input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     ///jwc o     do_Mode_State_Run_PID_Fn(0, 30, 0.1, 0.1, 0.01)
@@ -633,39 +640,61 @@ namespace q_Autonomous {
         input.calibrateCompass()
     })
 
+    ///jwc y input.onButtonPressed(Button.A, function () {
+    input.onGesture(Gesture.TiltLeft, function () {
+        ///jwc y sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int += 10
+        ///jwc y do_Set_SensorCompassDirection_Stage01B_DetectTarget_Degrees_Int_Fn()
+        editMode_K_Select_CHAR_ARRAY[editMode_K_Now_Base0_Int]=editMode_Not_CHAR
+        editMode_K_Now_Base0_Int += 1
+        if(editMode_K_Now_Base0_Int > editMode_K_Max_Base0_Int){
+            editMode_K_Now_Base0_Int = 0
+        }
+        editMode_K_Select_CHAR_ARRAY[editMode_K_Now_Base0_Int] = editMode_Yes_CHAR
+    })
+    ///jwc y input.onButtonPressed(Button.B, function () {
+    input.onGesture(Gesture.TiltRight, function () {
+        ///jwc y sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int += -10
+        ///jwc y do_Set_SensorCompassDirection_Stage01B_DetectTarget_Degrees_Int_Fn()
+        editMode_K_Select_CHAR_ARRAY[editMode_K_Now_Base0_Int] = editMode_Not_CHAR
+        editMode_K_Now_Base0_Int -= 1
+        if (editMode_K_Now_Base0_Int < 0) {
+            editMode_K_Now_Base0_Int = editMode_K_Max_Base0_Int
+        }
+        editMode_K_Select_CHAR_ARRAY[editMode_K_Now_Base0_Int] = editMode_Yes_CHAR
+    })
+
     input.onButtonPressed(Button.A, function () {
-        sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int += 10
-        do_Set_SensorCompassDirection_Stage01B_DetectTarget_Degrees_Int_Fn()
+        do_editMode_K_Value_Fn(editMode_K_Now_Base0_Int, +1 * editMode_K_ValueToAdd_INT_ARRAY[editMode_K_Now_Base0_Int])
     })
     input.onButtonPressed(Button.B, function () {
-        sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int += -10
-        do_Set_SensorCompassDirection_Stage01B_DetectTarget_Degrees_Int_Fn()
+        do_editMode_K_Value_Fn(editMode_K_Now_Base0_Int, -1 * editMode_K_ValueToAdd_INT_ARRAY[editMode_K_Now_Base0_Int])
     })
 
-    input.onGesture(Gesture.TiltLeft, function () {
-        sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int + 0.05
-        do_Confirm_Req_Increase_Func()
-    })
-    input.onGesture(Gesture.TiltRight, function () {
-        sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int + 0.005
-        do_Confirm_Req_Increase_Func()
-    })
-    input.onGesture(Gesture.LogoUp, function () {
-        sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int + 0.05
-        do_Confirm_Req_Increase_Func()
-    })
 
-    // * Since not enough buttons, group all decrements under one button since not common usage
-    input.onGesture(Gesture.LogoDown, function () {
-        sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int - 0.05
-        sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int - 0.005
-        sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int - 0.05
-        do_Confirm_Req_Decrease_Func()
-    })
-
-    input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
-        // * Nothing for now
-    })
-
+    ///jwc y input.onGesture(Gesture.TiltLeft, function () {
+    ///jwc y     sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int + 0.05
+    ///jwc y     do_Confirm_Req_Increase_Func()
+    ///jwc y })
+    ///jwc y input.onGesture(Gesture.TiltRight, function () {
+    ///jwc y     sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int + 0.005
+    ///jwc y     do_Confirm_Req_Increase_Func()
+    ///jwc y })
+    ///jwc y input.onGesture(Gesture.LogoUp, function () {
+    ///jwc y     sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int + 0.05
+    ///jwc y     do_Confirm_Req_Increase_Func()
+    ///jwc y })
+    ///jwc y 
+    ///jwc y // * Since not enough buttons, group all decrements under one button since not common usage
+    ///jwc y input.onGesture(Gesture.LogoDown, function () {
+    ///jwc y     sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int - 0.05
+    ///jwc y     sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int - 0.005
+    ///jwc y     sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int = sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int - 0.05
+    ///jwc y     do_Confirm_Req_Decrease_Func()
+    ///jwc y })
+    ///jwc y 
+    ///jwc y input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
+    ///jwc y     // * Nothing for now
+    ///jwc y })
+    ///jwc y 
 
 }
