@@ -22,6 +22,11 @@
 // * Note any edits is saved real-time since a cloud-editor, even before Github upload
 // * TYJ 1 sec spin ~ 45 deg, 2 sec spin ~ 90 deg, 2 sec spin ~ 180, 4 sec spin ~ 360, thus sufficient to max 5 sec spin
 
+//
+// TODO
+// * Add ': void' to function headers, though not required
+//
+
 // enum MyEnum {
 //    //% block="one"
 //    One,
