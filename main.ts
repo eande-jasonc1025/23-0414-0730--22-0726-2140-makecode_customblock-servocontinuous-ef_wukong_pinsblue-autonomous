@@ -23,7 +23,7 @@ input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
 })
 input.onGesture(Gesture.LogoUp, function () {
     q_Note_3.rq_Show_String_For_Note_Big_Fn(
-    "CodeStack B: Straight: PID_Not"
+    "CodeStack C: Straight: PID_Not"
     )
     q_Note_1.rq_Show_String_For_Note_Small_Fn(
     "OLED since not use 'RQ100 PID Dashboard'"
