@@ -549,7 +549,7 @@ namespace q_Note_5 {
 /**
  * q_Hardware blocks
  */
-//% weight=51 color=#7f7fff icon="Q"
+//% weight=53 color=#7f7fff icon="Q"
 namespace q_Hardware {
     /// //
     /// // * Global Variables Q Constants
@@ -895,12 +895,20 @@ namespace q_Hardware {
         deviceType_Bot_Bool = deviceTypeBotBoolIn
         deviceType_Controller_Bool = deviceTypeControllerBoolIn
 
+        OLED12864_I2C.clear()
+        OLED12864_I2C.showString(
+            0,
+            0,
+            "[ RQ100 Set Settings ]",
+            1
+        )
         OLED12864_I2C.showString(
             0,
             1,
-            "Bot:" + convertToText(deviceType_Bot_Bool) + "| Con:" + convertToText(deviceType_Controller_Bool),
+            "* Bot:" + convertToText(deviceType_Bot_Bool).substr(0, 1) + "| Controller:" + convertToText(deviceType_Controller_Bool).substr(0, 1),
             1
         )
+        basic.pause(2000)
     }
 }
 
