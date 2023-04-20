@@ -47,6 +47,9 @@ let editMode_K_ValueToAdd_INT_ARRAY = [0.05, 0.005, 0.05];
 let editMode_K_Now_Base0_Int = 0
 let editMode_K_Max_Base0_Int = 2
 
+let oled_FontSize_Big_Bool = true
+
+
 //
 // Teal #008080 rgb(0, 128, 128)
 // Green #008000 rgb(0, 128, 0)
@@ -66,14 +69,15 @@ namespace qPlus_Autonomous {
     * @param k_d_in number
     * @param motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int number
     * @param motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int number
+    * @param oled_fontsize_big_bool number
     */
-    //% block="set pid settings(required in 'on start' stack):|* k_p_in[0.1 +/-0.05]: $k_p_in|* k_i_in[0.01 +/-0.005]: $k_i_in|* k_d_in[0.1 +/-0.05]: $k_d_in|* motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int[default=15]: $motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int|* motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int[default=10]: $motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int"
+    //% block="set pid settings(required in 'on start' stack):|* k_p_in[0.1 +/-0.05]: $k_p_in|* k_i_in[0.01 +/-0.005]: $k_i_in|* k_d_in[0.1 +/-0.05]: $k_d_in|* motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int[default=15]: $motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int|* motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int[default=10]: $motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int|* oled_fontsize_big_bool[default=true]: $oled_fontsize_big_bool"
     //% weight=100 blockGap=8
     //% inlineInputMode=external
-    export function rq_Set_PID_Settings_Fn(k_p_in: number = 0.1, k_i_in: number = 0.01, k_d_in: number = 0.1, motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int: number = 15, motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int: number = 10): void {
+    export function rq_Set_PID_Settings_Fn(k_p_in: number = 0.1, k_i_in: number = 0.01, k_d_in: number = 0.1, motor_poweradjust_stage1_avoididledeadzone_asoffset_forturnsandstraights_int: number = 15, motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int: number = 10, oled_fontsize_big_bool: boolean = true ): void {
 
         ///jwc o not needed since have welcome screen now: if (true) {
-        ///jwc o not needed since have welcome screen now:     basic.showIcon(IconNames.Happy)
+        ///jwc o not needed since have welcome screen now:     basic.showIcon(IconNames.Happy)oled_fontsize_big_bool
         ///jwc o not needed since have welcome screen now: }
         ///jwc o not needed since have welcome screen now: // OLED: https://github.com/makecode-extensions/OLED12864_I2C
         ///jwc o not needed since have welcome screen now: if (true) {
@@ -218,6 +222,10 @@ namespace qPlus_Autonomous {
             motor_PowerAdjust_Stage2_PidBaseMotion_AsOffset_ForStraights_Int = motor_poweradjust_stage2_pidbasemotion_asoffset_forstraights_int
         }
 
+        if (true) {
+            oled_FontSize_Big_Bool = oled_fontsize_big_bool
+        }
+
         rq_Welcome_Help_Screen_Fn()
         mode_State_Welcome_Help_Screen_Show_Bool = true
         ///jwc y while (mode_State_Welcome_Help_Screen_Show_Bool) {
@@ -309,150 +317,292 @@ namespace qPlus_Autonomous {
         }
 
         if (true) {
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "* T:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Target__Degrees__Int,
-                    3,
-                    0
-                ) + " -B:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Bot_Now__Degrees__Int,
-                    3,
-                    0
-                ) + "=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int,
-                    4,
-                    0
-                ) + " D:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int,
-                    3,
-                    0
-                ),
-                0,
-                0
-            )
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                editMode_K_Select_CHAR_ARRAY[0] + "Kp" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int,
-                    4,
-                    2
-                ) + " " + editMode_K_Select_CHAR_ARRAY[1] + "Ki" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int,
-                    5,
-                    3
-                ) + " " + editMode_K_Select_CHAR_ARRAY[2] + "Kd" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int,
-                    4,
-                    2
-                ),
-                0,
-                1
-            )
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "P:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_Fix__Int,
-                    5,
-                    1
-                ) + "  I:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_Fix__Int,
-                    5,
-                    1
-                ) + "  D:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_Fix__Int,
-                    5,
-                    1
-                ),
-                0,
-                2
-            )
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "* PID:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int,
-                    5,
-                    1
-                ) + " L:" + motor_Direction_Left_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    motor_Power_Left_Int,
-                    3,
-                    0
-                ) + " R:" + motor_Direction_Right_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    motor_Power_Right_Int,
-                    3,
-                    0
-                ),
-                0,
-                3
-            )
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "1_P(" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int,
-                    4,
-                    0
-                ) + "x" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int,
-                    4,
-                    2
-                ) + ")=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_Fix__Int,
-                    5,
-                    1
-                ),
-                0,
-                4
-            )
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "3_I(" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Summation_Now__Int,
-                    4,
-                    0
-                ) + "x" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int,
-                    5,
-                    3
-                ) + ")=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_Fix__Int,
-                    5,
-                    1
-                ),
-                0,
-                6
-            )
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "2_D(" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Change__Int,
-                    4,
-                    0
-                ) + "x" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int,
-                    4,
-                    2
-                ) + ")=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_Fix__Int,
-                    5,
-                    1
-                ),
-                0,
-                5
-            )
-            q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
-                "De:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int,
-                    2,
-                    0
-                ) + " Ba:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    motor_PowerAdjust_Stage2_PidBaseMotion_AsOffset_ForStraights_Int,
-                    2,
-                    0
-                ) + " Wi:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    sensor_Compass_Direction__Detect_TargetWindow_Degrees_Int,
-                    2,
-                    0
-                ) + " Ti:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
-                    mode_State_Run_TimeSystem_Countdown_Now_Sec_Int,
-                    2,
-                    0
-                ),
-                0,
-                7
-            )
+            if (oled_FontSize_Big_Bool){
+
+                if (!mode_Force_Straight_Pid_Magnetometer_Run_Bool){
+                    
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        "T" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Target__Degrees__Int,
+                            3,
+                            0
+                        ) + "B" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Bot_Now__Degrees__Int,
+                            3,
+                            0
+                        ) + "=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int,
+                            4,
+                            0
+                        ),
+                        0,
+                        0
+                    )
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        editMode_K_Select_CHAR_ARRAY[0] + "" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int,
+                            3,
+                            1
+                        ) + "" + editMode_K_Select_CHAR_ARRAY[1] + "" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int,
+                            4,
+                            2
+                        ) + "" + editMode_K_Select_CHAR_ARRAY[2] + "" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int,
+                            3,
+                            1
+                        ),
+                        0,
+                        1
+                    )
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        "" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int,
+                            4,
+                            1
+                        ) + "" + motor_Direction_Left_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            motor_Power_Left_Int,
+                            3,
+                            0
+                        ) + "" + motor_Direction_Right_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            motor_Power_Right_Int,
+                            3,
+                            0
+                        ),
+                        0,
+                        2
+                    )
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        "D" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int,
+                            2,
+                            0
+                        ) + "B" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            motor_PowerAdjust_Stage2_PidBaseMotion_AsOffset_ForStraights_Int,
+                            2,
+                            0
+                        ) + "W" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_TargetWindow_Degrees_Int,
+                            2,
+                            0
+                        ) + "T" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            mode_State_Run_TimeSystem_Countdown_Now_Sec_Int,
+                            2,
+                            0
+                        ),
+                        0,
+                        3
+                    )
+                } else if (mode_Force_Straight_Pid_Magnetometer_Run_Bool){
+
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        "T" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Target__Degrees__Int,
+                            3,
+                            0
+                        ) + "B" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Bot_Now__Degrees__Int,
+                            3,
+                            0
+                        ) + "=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int,
+                            4,
+                            0
+                        ),
+                        0,
+                        0
+                    )
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        "" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int,
+                            4,
+                            1
+                        ) + "" + motor_Direction_Left_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            motor_Power_Left_Int,
+                            3,
+                            0
+                        ) + "" + motor_Direction_Right_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            motor_Power_Right_Int,
+                            3,
+                            0
+                        ),
+                        0,
+                        1
+                    )
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        "" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_Fix__Int,
+                            5,
+                            1
+                        ) + " " + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_Fix__Int,
+                            5,
+                            1
+                        ),
+                        0,
+                        2
+                    )
+
+                    q_Dashboard.rq_Show_String_For_Oled_BigFont_Fn(
+                        "" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_Fix__Int,
+                            5,
+                            1
+                        ) + "T" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                            mode_State_Run_TimeSystem_Countdown_Now_Sec_Int,
+                            2,
+                            0
+                        ),
+                        0,
+                        3
+                    )
+                }
+            } else {  // !oled_FontSize_Big_Bool
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     "* T:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Target__Degrees__Int,
+                ///jwc y         3,
+                ///jwc y         0
+                ///jwc y     ) + " -B:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Bot_Now__Degrees__Int,
+                ///jwc y         3,
+                ///jwc y         0
+                ///jwc y     ) + "=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int,
+                ///jwc y         4,
+                ///jwc y         0
+                ///jwc y     ) + " D:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Target_TurningOffset__Degrees__Int,
+                ///jwc y         3,
+                ///jwc y         0
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     0
+                ///jwc y )
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     editMode_K_Select_CHAR_ARRAY[0] + "Kp" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int,
+                ///jwc y         4,
+                ///jwc y         2
+                ///jwc y     ) + " " + editMode_K_Select_CHAR_ARRAY[1] + "Ki" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int,
+                ///jwc y         5,
+                ///jwc y         3
+                ///jwc y     ) + " " + editMode_K_Select_CHAR_ARRAY[2] + "Kd" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int,
+                ///jwc y         4,
+                ///jwc y         2
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     1
+                ///jwc y )
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     "P:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_Fix__Int,
+                ///jwc y         5,
+                ///jwc y         1
+                ///jwc y     ) + "  I:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_Fix__Int,
+                ///jwc y         5,
+                ///jwc y         1
+                ///jwc y     ) + "  D:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_Fix__Int,
+                ///jwc y         5,
+                ///jwc y         1
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     2
+                ///jwc y )
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     "* PID:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta__DegreesToPower__K_Total_Fix__Int,
+                ///jwc y         5,
+                ///jwc y         1
+                ///jwc y     ) + " L:" + motor_Direction_Left_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         motor_Power_Left_Int,
+                ///jwc y         3,
+                ///jwc y         0
+                ///jwc y     ) + " R:" + motor_Direction_Right_Str + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         motor_Power_Right_Int,
+                ///jwc y         3,
+                ///jwc y         0
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     3
+                ///jwc y )
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     "1_P(" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Now__Degrees__Int,
+                ///jwc y         4,
+                ///jwc y         0
+                ///jwc y     ) + "x" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_MagicConvert__Int,
+                ///jwc y         4,
+                ///jwc y         2
+                ///jwc y     ) + ")=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Now__DegreesToPower__K_Proportional_Fix__Int,
+                ///jwc y         5,
+                ///jwc y         1
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     4
+                ///jwc y )
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     "2_I(" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Summation_Now__Int,
+                ///jwc y         4,
+                ///jwc y         0
+                ///jwc y     ) + "x" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_MagicConvert__Int,
+                ///jwc y         5,
+                ///jwc y         3
+                ///jwc y     ) + ")=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Summation__DegreesToPower__K_Integral_Fix__Int,
+                ///jwc y         5,
+                ///jwc y         1
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     5
+                ///jwc y )
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     "3_D(" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Change__Int,
+                ///jwc y         4,
+                ///jwc y         0
+                ///jwc y     ) + "x" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_MagicConvert__Int,
+                ///jwc y         4,
+                ///jwc y         2
+                ///jwc y     ) + ")=" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_Delta_Change__DegreesToPower__K_Derivative_Fix__Int,
+                ///jwc y         5,
+                ///jwc y         1
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     5
+                ///jwc y )
+                ///jwc y q_Dashboard.rq_Show_String_For_Oled_SmallFont_Fn(
+                ///jwc y     "De:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         motor_PowerAdjust_Stage1_AvoidIdleDeadzone_AsOffset_ForTurnsAndStraights_Int,
+                ///jwc y         2,
+                ///jwc y         0
+                ///jwc y     ) + " Ba:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         motor_PowerAdjust_Stage2_PidBaseMotion_AsOffset_ForStraights_Int,
+                ///jwc y         2,
+                ///jwc y         0
+                ///jwc y     ) + " Wi:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         sensor_Compass_Direction__Detect_TargetWindow_Degrees_Int,
+                ///jwc y         2,
+                ///jwc y         0
+                ///jwc y     ) + " Ti:" + q_Algorithm.rq_Get_Number_WithColumnPadding_AsStringOut_Fn(
+                ///jwc y         mode_State_Run_TimeSystem_Countdown_Now_Sec_Int,
+                ///jwc y         2,
+                ///jwc y         0
+                ///jwc y     ),
+                ///jwc y     0,
+                ///jwc y     7
+                ///jwc y )
+            }
             ///jwc y q_Note_2.rq_Show_String_For_Note_Small_Fn(
             ///jwc y      "Multiply the first parameter for such multiple in granularity"
             ///jwc y )

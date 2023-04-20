@@ -35,7 +35,7 @@ input.onGesture(Gesture.LogoUp, function () {
     25,
     25
     )
-    q_Timer.rq_Set_ContinueCurrentState_CountdownTimer_Fn(20, rq_Time_Units_Enum.Seconds)
+    q_Timer.rq_Set_ContinueCurrentState_CountdownTimer_Fn(120, rq_Time_Units_Enum.Seconds)
     q_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(
     rq_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorLeft__S0_MotorRight,
     0,
@@ -48,7 +48,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     )
     qPlus_Autonomous.rq_Run_PID_Motion_Fn(
     0,
-    20
+    120
     )
     q_Hardware.rq_Set_PowerMotorsViaBlueRedBlackPins_Fn(
     rq_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorLeft__S0_MotorRight,
@@ -57,11 +57,12 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     )
 })
 basic.showIcon(IconNames.Happy)
-basic.pause(2000)
 qPlus_Autonomous.rq_Set_PID_Settings_Fn(
-0.2,
-0.01,
+0.3,
+0.02,
 0.1,
 15,
-10
+10,
+true
 )
+basic.pause(2000)
