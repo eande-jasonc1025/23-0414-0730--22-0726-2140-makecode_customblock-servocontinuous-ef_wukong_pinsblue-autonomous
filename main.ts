@@ -58,9 +58,9 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
 })
 basic.showIcon(IconNames.Happy)
 qPlus_Autonomous.rq_Set_PID_Settings_Fn(
-0.3,
-0.02,
-0.1,
+0,
+0,
+0,
 15,
 10,
 true
